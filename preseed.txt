@@ -1,7 +1,7 @@
 #### Contents of the preconfiguration file (for stretch)
 ### Localization
 # Preseeding only locale sets language, country and locale.
-d-i debian-installer/locale string en_US
+d-i debian-installer/locale string fr_FR
 
 # The values can also be preseeded individually for greater flexibility.
 #d-i debian-installer/language string en
@@ -11,7 +11,7 @@ d-i debian-installer/locale string en_US
 #d-i localechooser/supported-locales multiselect en_US.UTF-8, nl_NL.UTF-8
 
 # Keyboard selection.
-d-i keyboard-configuration/xkb-keymap select us
+d-i keyboard-configuration/xkb-keymap select fr
 # d-i keyboard-configuration/toggle select No toggling
 
 ### Network configuration
@@ -65,8 +65,8 @@ d-i netcfg/choose_interface select auto
 # Any hostname and domain names assigned from dhcp take precedence over
 # values set here. However, setting the values still prevents the questions
 # from being shown, even if values come from dhcp.
-d-i netcfg/get_hostname string unassigned-hostname
-d-i netcfg/get_domain string unassigned-domain
+d-i netcfg/get_hostname string wazo
+d-i netcfg/get_domain string local
 
 # If you want to force a hostname, regardless of what either the DHCP
 # server returns or what the reverse DNS entry for the IP is, uncomment
@@ -113,17 +113,17 @@ d-i mirror/http/proxy string
 #d-i passwd/make-user boolean false
 
 # Root password, either in clear text
-#d-i passwd/root-password password r00tme
-#d-i passwd/root-password-again password r00tme
+d-i passwd/root-password password dfgdfg
+d-i passwd/root-password-again password dfgdfg
 # or encrypted using a crypt(3)  hash.
 #d-i passwd/root-password-crypted password [crypt(3) hash]
 
 # To create a normal user account.
-#d-i passwd/user-fullname string Debian User
-#d-i passwd/username string debian
+d-i passwd/user-fullname string fred
+d-i passwd/username string fred
 # Normal user's password, either in clear text
-#d-i passwd/user-password password insecure
-#d-i passwd/user-password-again password insecure
+d-i passwd/user-password password dfgdfg
+d-i passwd/user-password-again password dfgdfg
 # or encrypted using a crypt(3) hash.
 #d-i passwd/user-password-crypted password [crypt(3) hash]
 # Create the first user with the specified UID instead of the default.
@@ -131,7 +131,7 @@ d-i mirror/http/proxy string
 
 # The user account will be added to some standard initial groups. To
 # override that, use this.
-#d-i passwd/user-default-groups string audio cdrom video
+d-i passwd/user-default-groups string audio cdrom video sudo
 
 ### Clock and time zone setup
 # Controls whether or not the hardware clock is set to UTC.
@@ -150,7 +150,7 @@ d-i clock-setup/ntp boolean true
 ## Partitioning example
 # If the system has free space you can choose to only partition that space.
 # This is only honoured if partman-auto/method (below) is not set.
-#d-i partman-auto/init_automatically_partition select biggest_free
+d-i partman-auto/init_automatically_partition select biggest_free
 
 # Alternatively, you may specify a disk to partition. If the system has only
 # one disk the installer will default to using that, but otherwise the device
@@ -163,7 +163,7 @@ d-i clock-setup/ntp boolean true
 # - regular: use the usual partition types for your architecture
 # - lvm:     use LVM to partition the disk
 # - crypto:  use LVM within an encrypted partition
-d-i partman-auto/method string lvm
+d-i partman-auto/method string regular
 
 # If one of the disks that are going to be automatically partitioned
 # contains an old LVM configuration, the user will normally receive a
@@ -324,15 +324,17 @@ d-i partman/confirm_nooverwrite boolean true
 
 # Individual additional packages to install
 #d-i pkgsel/include string openssh-server build-essential
+d-i pkgsel/include string openssh-server sudo
 # Whether to upgrade packages after debootstrap.
 # Allowed values: none, safe-upgrade, full-upgrade
 #d-i pkgsel/upgrade select none
+d-i pkgsel/upgrade select full-upgrade
 
 # Some versions of the installer can report back on what software you have
 # installed, and what software you use. The default is not to report back,
 # but sending reports helps the project determine what software is most
 # popular and include it on CDs.
-#popularity-contest popularity-contest/participate boolean false
+popularity-contest popularity-contest/participate boolean false
 
 ### Boot loader installation
 # Grub is the default boot loader (for x86). If you want lilo installed
@@ -355,7 +357,7 @@ d-i grub-installer/with_other_os boolean true
 # determined safely in general, so this needs to be specified:
 #d-i grub-installer/bootdev  string /dev/sda
 # To install to the first device (assuming it is not a USB stick):
-#d-i grub-installer/bootdev  string default
+d-i grub-installer/bootdev  string default
 
 # Alternatively, if you want to install to a location other than the mbr,
 # uncomment and edit these lines:
