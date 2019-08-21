@@ -39,7 +39,7 @@ else
 fi
 
 if [ -f /home/pool1/$name.img ]; then
-    virsh destroy $name
+    virsh destroy $name || :
 
     virsh undefine $name --remove-all-storage
 fi
@@ -48,4 +48,4 @@ qemu-img create -f qcow2 /home/pool1/$name.img 10G
 
 virt-install --name=$name --disk path=/home/pool1/$name.img --graphics spice --vcpu=1 --ram=1024 $iso_load --network bridge=virbr0 --os-variant debian9 $preseed_opt && cleanup &
 
-# provision-vm.sh ends here
+# provision-debian-vm.sh ends here
