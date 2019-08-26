@@ -2,7 +2,13 @@
 
 dir=$(dirname $0)
 
-$dir/provision-debian-vm.sh iso $dir/../wazo-pbx/wazo-iso/workspace/wazo-engine.iso no
+if [ $# -eq 1 ]; then
+    ISO="$1"
+else
+    ISO="$dir/../wazo-pbx/wazo-iso/workspace/wazo-engine.iso"
+fi
+
+$dir/provision-debian-vm.sh iso $ISO no
 
 sleep 20
 
