@@ -46,6 +46,6 @@ fi
 
 qemu-img create -f qcow2 /home/pool1/$name.img 10G
 
-virt-install --name=$name --disk path=/home/pool1/$name.img --graphics spice --vcpu=1 --ram=1024 $iso_load --network bridge=virbr0 --os-variant debian9 $preseed_opt && cleanup &
+virt-install --name=$name --disk path=/home/pool1/$name.img --graphics spice --vcpu=1 --ram=1024 $iso_load --network bridge=virbr0,mac=$($dir/name2mac.py $name) --os-variant debian9 $preseed_opt && cleanup &
 
 # provision-debian-vm.sh ends here
