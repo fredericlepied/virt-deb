@@ -5,7 +5,7 @@ dir=$(dirname $0)
 if [ $# -eq 1 ]; then
     ISO="$1"
 else
-    ISO="$dir/../wazo-pbx/wazo-iso/workspace/wazo-engine.iso"
+    ISO="$dir/../wazo-platform/wazo-iso/workspace/wazo-engine.iso"
 fi
 
 $dir/provision-debian-vm.sh iso $ISO no

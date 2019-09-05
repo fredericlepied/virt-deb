@@ -4,6 +4,10 @@ Tools to create VM using virt-install
 Start a vm::
   ./provision-debian-vm.sh [<name> [<iso file> [<no preseed>]]]
 
+The default iso that is downloaded from
+https://www.debian.org/CD/netinst/ is
+`debian-10.0.0-amd64-netinst.iso`.
+
 The mac address is always the same for the same name.
 
 Install a vm from Wazo CD::

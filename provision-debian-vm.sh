@@ -22,7 +22,10 @@ else
 fi
 
 if [ $# -lt 2 ]; then
-    iso=$dir/debian-9.9.0-amd64-netinst.iso
+    iso=$dir/debian-10.0.0-amd64-netinst.iso
+    if [ ! -r $dir/debian-10.0.0-amd64-netinst.iso ]; then
+        wget -O $dir/debian-10.0.0-amd64-netinst.iso https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-10.0.0-amd64-netinst.iso
+    fi
 else
     iso=$2
 fi
