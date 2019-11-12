@@ -8,11 +8,17 @@ else
     ISO="$dir/../wazo-platform/wazo-iso/workspace/wazo-engine.iso"
 fi
 
-$dir/provision-debian-vm.sh iso $ISO no
+if [ $# -eq 2 ]; then
+    name=$2
+else
+    name=iso
+fi
+
+$dir/provision-debian-vm.sh $name $ISO no
 
 sleep 20
 
-virsh send-key iso --codeset linux --holdtime 100  KEY_DOWN KEY_DOWN KEY_ENTER \
+virsh send-key $name --codeset linux --holdtime 100  KEY_DOWN KEY_DOWN KEY_ENTER \
     KEY_DOWN KEY_DOWN KEY_DOWN KEY_DOWN KEY_DOWN KEY_DOWN KEY_ENTER
 
 # provision-wazo-iso.sh ends here
