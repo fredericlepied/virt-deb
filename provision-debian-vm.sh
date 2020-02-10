@@ -22,9 +22,10 @@ else
 fi
 
 if [ $# -lt 2 ]; then
-    iso=$dir/debian-10.0.0-amd64-netinst.iso
-    if [ ! -r $dir/debian-10.0.0-amd64-netinst.iso ]; then
-        wget -O $dir/debian-10.0.0-amd64-netinst.iso https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-10.0.0-amd64-netinst.iso
+    ISONAME=debian-10.3.0-amd64-netinst.iso
+    iso=$dir/$ISONAME
+    if [ ! -r $dir/$ISONAME ]; then
+        wget -O $dir/$ISONAME https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/$ISONAME
     fi
 else
     iso=$2
@@ -52,7 +53,7 @@ if [ -n "$domain" -a "$domain" != local ]; then
     sed -i -e "s@d-i netcfg/get_domain string local@d-i netcfg/get_domain string $domain@" $preseed
 fi
 
-mac="$($dir/name2mac.py $name)"
+mac="$($dir/name2mac.py $salt $name)"
 
 if [ $# -eq 3 ]; then
     preseed_opt=
@@ -65,11 +66,11 @@ fi
 if [ -f $pool/$name.img ]; then
     virsh destroy $name || :
 
-    virsh undefine $name --remove-all-storage
+    virsh undefine $name --remove-all-storage --managed-save
 fi
 
 qemu-img create -f qcow2 $pool/$name.img 10G
 
-virt-install --name=$name --disk path=$pool/$name.img --graphics spice --vcpu=1 --ram=1024 $iso_load --network bridge=virbr0,mac=$mac --os-variant debian9 $preseed_opt && cleanup &
+virt-install --check all=off --name=$name --disk path=$pool/$name.img --graphics spice --vcpu=1 --ram=1024 $iso_load --network bridge=virbr0,mac=$mac --os-variant debian10 $preseed_opt && cleanup &
 
 # provision-debian-vm.sh ends here
